@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ViveBien — Salud y Bienestar</title>
+<meta name="description" content="Tu compañero diario de hidratación, sueño y bienestar emocional" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+<style>
+  :root {
+    --green: #1D9E75;
+    --green-light: #E1F5EE;
+    --green-mid: #5DCAA5;
+    --green-dark: #085041;
+    --blue: #378ADD;
+    --blue-light: #E6F1FB;
+    --purple: #7F77DD;
+    --purple-light: #EEEDFE;
+    --amber: #EF9F27;
+    --amber-light: #FAEEDA;
+    --coral: #D85A30;
+    --coral-light: #FAECE7;
+    --teal-dark: #0F6E56;
+    --bg: #f5f7f5;
+    --card: #ffffff;
+    --card2: #f0f4f1;
+    --border: rgba(0,0,0,0.08);
+    --border2: rgba(0,0,0,0.14);
+    --text: #1a1f1a;
+    --text2: #5a6b5a;
+    --text3: #8a9e8a;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --radius-pill: 99px;
+    --shadow: 0 2px 16px rgba(0,0,0,0.07);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ---- HERO BANNER ---- */
+  .hero {
+    width: 100%;
+    background: linear-gradient(135deg, #0F6E56 0%, #1D9E75 50%, #5DCAA5 100%);
+    padding: 32px 20px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    top: -80px; right: -80px;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    bottom: -60px; left: -40px;
+  }
+  .hero-logo {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: var(--radius-pill);
+    padding: 6px 18px 6px 10px;
+    margin-bottom: 20px;
+  }
+  .hero-logo i { font-size: 22px; color: white; }
+  .hero-logo span { font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 700; color: white; letter-spacing: 0.3px; }
+  .hero h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 800;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .hero p { font-size: 15px; color: rgba(255,255,255,0.85); max-width: 400px; margin: 0 auto; line-height: 1.6; }
+
+  /* ---- MAIN CARD ---- */
+  .app-card {
+    width: 100%;
+    max-width: 480px;
+    background: var(--card);
+    border-radius: var(--radius) var(--radius) 0 0;
+    box-shadow: var(--shadow-lg);
+    margin-top: -48px;
+    position: relative;
+    z-index: 10;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ---- NAV ---- */
+  .nav-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    background: var(--card);
+    position: sticky; top: 0; z-index: 20;
+  }
+  .nav-tab {
+    flex: 1; padding: 14px 4px 12px;
+    font-size: 11px; font-weight: 600;
+    font-family: 'Nunito', sans-serif;
+    text-align: center; cursor: pointer;
+    color: var(--text3);
+    border-bottom: 3px solid transparent;
+    background: none; border-left: none; border-right: none; border-top: none;
+    transition: all 0.2s; letter-spacing: 0.2px;
+  }
+  .nav-tab.active { color: var(--green); border-bottom-color: var(--green); }
+  .nav-tab i { display: block; font-size: 20px; margin-bottom: 3px; }
+
+  /* ---- SCREENS ---- */
+  .screen { display: none; flex-direction: column; padding: 20px; gap: 14px; }
+  .screen.active { display: flex; }
+
+  /* ---- CARDS ---- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: var(--shadow);
+  }
+  .card-surface {
+    background: var(--card2);
+    border-radius: var(--radius);
+    padding: 18px;
+    border: 1px solid var(--border);
+  }
+  .card h3 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px; font-weight: 700;
+    margin-bottom: 12px; color: var(--text);
+    display: flex; align-items: center; gap: 7px;
+  }
+  .card h3 i { font-size: 17px; color: var(--green); }
+
+  /* ---- FORM ---- */
+  .form-row { display: flex; gap: 10px; margin-bottom: 10px; }
+  .form-group { flex: 1; }
+  .form-group label { font-size: 11px; font-weight: 600; color: var(--text2); display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .form-group input, .form-group select {
+    width: 100%; padding: 10px 12px; font-size: 14px;
+    border: 1.5px solid var(--border2); border-radius: var(--radius-sm);
+    background: var(--card); color: var(--text);
+    font-family: 'Nunito Sans', sans-serif;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--green); }
+
+  /* ---- BUTTONS ---- */
+  .btn-primary {
+    background: var(--green); color: white;
+    border: none; border-radius: var(--radius-pill);
+    padding: 13px 20px; font-size: 14px; font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer; width: 100%;
+    transition: all 0.2s; letter-spacing: 0.2px;
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    box-shadow: 0 4px 14px rgba(29,158,117,0.35);
+  }
+  .btn-primary:hover { background: var(--teal-dark); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(29,158,117,0.4); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+  .btn-action {
+    flex: 1; padding: 11px 8px; font-size: 13px; font-weight: 600;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--border2);
+    background: var(--card); color: var(--text);
+    cursor: pointer; transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+    font-family: 'Nunito', sans-serif;
+  }
+  .btn-action.water { border-color: #85B7EB; color: #185FA5; background: var(--blue-light); }
+  .btn-action.water:hover { background: #d0e8f8; }
+  .actions-row { display: flex; gap: 10px; }
+
+  /* ---- METRIC GRID ---- */
+  .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .metric-card {
+    background: var(--card2);
+    border-radius: var(--radius);
+    padding: 16px 14px;
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  .metric-card .m-label { font-size: 11px; font-weight: 600; color: var(--text2); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .metric-card .m-value { font-family: 'Nunito', sans-serif; font-size: 30px; font-weight: 800; color: var(--text); line-height: 1; }
+  .metric-card .m-unit { font-size: 12px; color: var(--text3); margin-top: 3px; }
+  .metric-card .m-goal { font-size: 12px; color: var(--green); margin-top: 6px; font-weight: 600; }
+
+  /* ---- PROGRESS ---- */
+  .progress-bar-wrap { margin-bottom: 14px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+  .progress-track { height: 10px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 99px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
+  .fill-water { background: linear-gradient(90deg, #378ADD, #85B7EB); }
+  .fill-sleep { background: linear-gradient(90deg, #534AB7, #AFA9EC); }
+
+  /* ---- TIP BOX ---- */
+  .tip-box {
+    background: var(--green-light);
+    border: 1px solid var(--green-mid);
+    border-radius: var(--radius-sm);
+    padding: 13px 15px;
+    font-size: 13px; color: var(--teal-dark);
+    line-height: 1.6; display: flex; gap: 9px; align-items: flex-start;
+  }
+  .tip-box i { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ---- TOGGLES ---- */
+  .reminder-toggle {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--card2); border-radius: var(--radius-sm);
+    padding: 13px 15px; border: 1px solid var(--border);
+  }
+  .reminder-toggle .rt-label { font-size: 13px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 9px; }
+  .reminder-toggle .rt-label i { font-size: 17px; color: var(--green); }
+  .toggle-switch { position: relative; width: 44px; height: 24px; }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider { position: absolute; inset: 0; background: var(--border2); border-radius: 99px; cursor: pointer; transition: background 0.2s; }
+  .toggle-slider:before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: transform 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+  .toggle-switch input:checked + .toggle-slider { background: var(--green); }
+  .toggle-switch input:checked + .toggle-slider:before { transform: translateX(20px); }
+
+  /* ---- EMOTIONS ---- */
+  .emotion-category { margin-bottom: 16px; }
+  .cat-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px;
+    color: var(--text2); margin-bottom: 9px;
+    display: flex; align-items: center; gap: 6px;
+    font-family: 'Nunito', sans-serif;
+  }
+  .cat-label i { font-size: 14px; }
+  .emotion-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip {
+    display: flex; align-items: center; gap: 5px;
+    padding: 7px 13px; border-radius: var(--radius-pill);
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    border: 1.5px solid var(--border2);
+    background: var(--card); color: var(--text);
+    transition: all 0.15s; user-select: none;
+    font-family: 'Nunito', sans-serif;
+  }
+  .chip:hover { border-color: var(--green); transform: translateY(-1px); }
+  .chip.selected { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+  .chip .chip-emoji { font-size: 15px; }
+
+  .cat-positivo .chip.selected { background: var(--green-light); color: var(--green-dark); border-color: var(--green-mid); }
+  .cat-negativo .chip.selected { background: var(--coral-light); color: #712B13; border-color: #F0997B; }
+  .cat-estres   .chip.selected { background: var(--amber-light); color: #633806; border-color: var(--amber); }
+  .cat-social   .chip.selected { background: var(--purple-light); color: #3C3489; border-color: #AFA9EC; }
+  .cat-fisico   .chip.selected { background: var(--blue-light); color: #185FA5; border-color: #85B7EB; }
+
+  .selected-summary {
+    margin-top: 12px; padding: 12px 14px;
+    background: var(--card); border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    font-size: 12px; color: var(--text2);
+    min-height: 42px; line-height: 1.6;
+  }
+  .selected-summary strong { color: var(--text); }
+
+  /* ---- AI BOX ---- */
+  .ai-response {
+    background: var(--card2);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    border: 1px solid var(--border);
+    min-height: 90px;
+  }
+  .ai-label {
+    font-size: 11px; font-weight: 700; color: var(--green);
+    margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    font-family: 'Nunito', sans-serif;
+  }
+  .ai-text { font-size: 14px; color: var(--text); line-height: 1.7; }
+  .ai-placeholder { color: var(--text3); font-style: italic; font-size: 13px; }
+
+  .loading-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: blink 1.2s infinite; margin: 0 2px; }
+  .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes blink { 0%,80%,100%{opacity:0.2} 40%{opacity:1} }
+
+  /* ---- HISTORIAL ---- */
+  .history-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: flex; align-items: flex-start; gap: 13px;
+    box-shadow: var(--shadow);
+  }
+  .history-date { font-size: 11px; color: var(--text3); min-width: 54px; padding-top: 2px; font-weight: 600; }
+  .history-emoji { font-size: 24px; }
+  .history-detail { flex: 1; }
+  .h-emociones { font-size: 12px; color: var(--text2); margin-top: 3px; line-height: 1.5; }
+  .h-stats { font-size: 11px; color: var(--text3); margin-top: 5px; display: flex; gap: 10px; }
+  .h-stats span { display: flex; align-items: center; gap: 4px; }
+
+  .empty-state { text-align: center; padding: 50px 20px; color: var(--text3); font-size: 14px; }
+  .empty-state i { font-size: 44px; display: block; margin-bottom: 10px; opacity: 0.35; }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    width: 100%; max-width: 480px;
+    padding: 20px;
+    text-align: center;
+    font-size: 12px; color: var(--text3);
+    line-height: 1.6;
+  }
+
+  /* ---- ANIMATIONS ---- */
+  .screen.active { animation: fadeUp 0.25s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 520px) {
+    .app-card { border-radius: var(--radius) var(--radius) 0 0; }
+    .hero { padding: 28px 16px 72px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-logo">
+    <i class="ti ti-heart-plus"></i>
+    <span>ViveBien</span>
+  </div>
+  <h1>Tu salud,<br>tu bienestar</h1>
+  <p>Registra tu hidratación, sueño y estado emocional cada día</p>
+</div>
+
+<div class="app-card">
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('perfil')"><i class="ti ti-user"></i>Perfil</button>
+    <button class="nav-tab" onclick="switchTab('monitor')"><i class="ti ti-droplet"></i>Monitor</button>
+    <button class="nav-tab" onclick="switchTab('emocional')"><i class="ti ti-mood-smile"></i>Ánimo</button>
+    <button class="nav-tab" onclick="switchTab('historial')"><i class="ti ti-calendar"></i>Historial</button>
+  </nav>
+
+  <!-- PERFIL -->
+  <section id="screen-perfil" class="screen active">
+    <div class="card">
+      <h3><i class="ti ti-id-badge"></i>Tu perfil</h3>
+      <div class="form-row">
+        <div class="form-group"><label>Nombre</label><input type="text" id="nombre" value="Alex" /></div>
+        <div class="form-group"><label>Edad</label><input type="number" id="edad" value="16" min="10" max="100" /></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Peso (kg)</label><input type="number" id="peso" value="60" min="20" max="200" /></div>
+        <div class="form-group"><label>Sexo</label>
+          <select id="sexo">
+            <option value="m">Masculino</option>
+            <option value="f" selected>Femenino</option>
+            <option value="o">Otro</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="calcularMetas()"><i class="ti ti-calculator"></i> Calcular mis metas</button>
+    </div>
+
+    <div id="metas-box" class="tip-box" style="display:none;">
+      <i class="ti ti-info-circle"></i>
+      <span id="metas-text"></span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div class="reminder-toggle">
+        <span class="rt-label"><i class="ti ti-droplet"></i> Recordatorio de agua</span>
+        <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+      </div>
+      <div class="reminder-toggle">
+        <span class="rt-label"><i class="ti ti-moon"></i> Recordatorio de sueño</span>
+        <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+      </div>
+      <div class="reminder-toggle">
+        <span class="rt-label"><i class="ti ti-mood-smile"></i> Registro diario de ánimo</span>
+        <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+      </div>
+    </div>
+  </section>
+
+  <!-- MONITOR -->
+  <section id="screen-monitor" class="screen">
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="m-label"><i class="ti ti-droplet"></i> Agua hoy</div>
+        <div class="m-value" id="agua-actual">0</div>
+        <div class="m-unit">de <span id="agua-meta">2400</span> ml</div>
+        <div class="m-goal" id="agua-pct">0% de tu meta</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label"><i class="ti ti-moon"></i> Sueño anoche</div>
+        <div class="m-value" id="sueno-actual">0</div>
+        <div class="m-unit">de <span id="sueno-meta">8</span> horas</div>
+        <div class="m-goal" id="sueno-pct">Sin registro</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><i class="ti ti-trending-up"></i>Progreso del día</h3>
+      <div class="progress-bar-wrap">
+        <div class="progress-label"><span><i class="ti ti-droplet"></i> Hidratación</span><span id="agua-bar-lbl">0%</span></div>
+        <div class="progress-track"><div class="progress-fill fill-water" id="agua-bar" style="width:0%"></div></div>
+      </div>
+      <div class="progress-bar-wrap" style="margin-bottom:0">
+        <div class="progress-label"><span><i class="ti ti-moon"></i> Sueño</span><span id="sueno-bar-lbl">0%</span></div>
+        <div class="progress-track"><div class="progress-fill fill-sleep" id="sueno-bar" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="actions-row">
+      <button class="btn-action water" onclick="agregarAgua(250)"><i class="ti ti-plus"></i> 250 ml</button>
+      <button class="btn-action water" onclick="agregarAgua(500)"><i class="ti ti-plus"></i> 500 ml</button>
+      <button class="btn-action water" onclick="agregarAgua(750)"><i class="ti ti-plus"></i> 750 ml</button>
+    </div>
+
+    <div class="card">
+      <h3><i class="ti ti-moon"></i>Registro de sueño</h3>
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+        <input type="range" min="0" max="12" step="0.5" value="0" id="sueno-slider" style="flex:1;" oninput="actualizarSueno(this.value)" />
+        <span style="font-family:'Nunito',sans-serif;font-size:18px;font-weight:800;min-width:52px;color:var(--text);" id="sueno-display">0 h</span>
+      </div>
+      <button class="btn-primary" onclick="registrarSueno()"><i class="ti ti-check"></i> Registrar sueño</button>
+    </div>
+
+    <div id="monitor-tip" class="tip-box" style="display:none;">
+      <i class="ti ti-bulb"></i><span id="monitor-tip-text"></span>
+    </div>
+  </section>
+
+  <!-- EMOCIONAL -->
+  <section id="screen-emocional" class="screen">
+    <div class="card-surface">
+      <h3 style="font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;margin-bottom:4px;color:var(--text);">¿Cómo te sientes hoy?</h3>
+      <p style="font-size:12px;color:var(--text2);margin-bottom:16px;">Selecciona todas las que describan tu estado de ánimo</p>
+
+      <div class="emotion-category cat-positivo">
+        <div class="cat-label"><i class="ti ti-sun"></i> Emociones positivas</div>
+        <div class="emotion-chips" id="chips-positivo"></div>
+      </div>
+      <div class="emotion-category cat-negativo">
+        <div class="cat-label"><i class="ti ti-cloud-rain"></i> Emociones difíciles</div>
+        <div class="emotion-chips" id="chips-negativo"></div>
+      </div>
+      <div class="emotion-category cat-estres">
+        <div class="cat-label"><i class="ti ti-flame"></i> Estrés y presión</div>
+        <div class="emotion-chips" id="chips-estres"></div>
+      </div>
+      <div class="emotion-category cat-social">
+        <div class="cat-label"><i class="ti ti-users"></i> Social y relaciones</div>
+        <div class="emotion-chips" id="chips-social"></div>
+      </div>
+      <div class="emotion-category cat-fisico" style="margin-bottom:0">
+        <div class="cat-label"><i class="ti ti-run"></i> Estado físico</div>
+        <div class="emotion-chips" id="chips-fisico"></div>
+      </div>
+
+      <div class="selected-summary" id="selected-summary">
+        <span style="color:var(--text3);font-style:italic;">Aún no has seleccionado ninguna emoción.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><i class="ti ti-pencil"></i>Cuéntame más (opcional)</h3>
+      <textarea id="journal-text" rows="3" style="width:100%;padding:10px 12px;font-size:13px;border:1.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--card);color:var(--text);resize:none;line-height:1.6;font-family:'Nunito Sans',sans-serif;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border2)'" placeholder="¿Qué está pasando hoy? Escribe sobre tu día, lo que sientes..."></textarea>
+    </div>
+
+    <button class="btn-primary" onclick="guardarRegistroManual()">
+      <i class="ti ti-device-floppy"></i> Guardar registro de hoy
+    </button>
+
+    <div id="guardado-msg" style="display:none;" class="tip-box">
+      <i class="ti ti-check"></i><span id="guardado-text"></span>
+    </div>
+  </section>
+
+  <!-- HISTORIAL -->
+  <section id="screen-historial" class="screen">
+    <button class="btn-primary" onclick="exportarCSV()" style="background:var(--green);">
+      <i class="ti ti-download"></i> Exportar mis datos como CSV
+    </button>
+    <div id="historial-list" style="display:flex;flex-direction:column;gap:10px;">
+      <div class="empty-state">
+        <i class="ti ti-calendar-off"></i>
+        Aún no hay registros.<br>¡Empieza a registrar tu bienestar hoy!
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="footer">
+  Hecho con 💚 para ciencias ciudadanas · ViveBien
+</div>
+
+<script>
+const EMOCIONES = {
+  positivo: [
+    {id:'alegre',label:'Alegre',emoji:'😄'},{id:'tranquilo',label:'Tranquilo/a',emoji:'😌'},
+    {id:'motivado',label:'Motivado/a',emoji:'💪'},{id:'agradecido',label:'Agradecido/a',emoji:'🙏'},
+    {id:'energico',label:'Energético/a',emoji:'⚡'},{id:'esperanzado',label:'Esperanzado/a',emoji:'🌟'},
+    {id:'feliz',label:'Feliz',emoji:'😊'},{id:'emocionado',label:'Emocionado/a',emoji:'🎉'},
+  ],
+  negativo: [
+    {id:'triste',label:'Triste',emoji:'😢'},{id:'ansioso',label:'Ansioso/a',emoji:'😰'},
+    {id:'enojado',label:'Enojado/a',emoji:'😤'},{id:'frustrado',label:'Frustrado/a',emoji:'😩'},
+    {id:'aburrido',label:'Aburrido/a',emoji:'😑'},{id:'asustado',label:'Asustado/a',emoji:'😨'},
+    {id:'decepcionado',label:'Decepcionado/a',emoji:'😞'},{id:'solo',label:'Solo/a',emoji:'🥺'},
+  ],
+  estres: [
+    {id:'estresado',label:'Estresado/a',emoji:'🤯'},{id:'agobiado',label:'Agobiado/a',emoji:'😵'},
+    {id:'presionado',label:'Presionado/a',emoji:'📚'},{id:'sin_animo',label:'Sin ánimo',emoji:'🫠'},
+    {id:'saturado',label:'Saturado/a',emoji:'🌀'},{id:'nervioso',label:'Nervioso/a',emoji:'😬'},
+  ],
+  social: [
+    {id:'conectado',label:'Conectado/a',emoji:'🤝'},{id:'ignorado',label:'Ignorado/a',emoji:'👻'},
+    {id:'conflicto',label:'En conflicto',emoji:'⚡'},{id:'apoyado',label:'Apoyado/a',emoji:'💛'},
+    {id:'excluido',label:'Excluido/a',emoji:'😶'},{id:'querido',label:'Querido/a',emoji:'💞'},
+  ],
+  fisico: [
+    {id:'cansado',label:'Cansado/a',emoji:'😴'},{id:'con_energia',label:'Con energía',emoji:'🏃'},
+    {id:'enfermo',label:'Mal físico',emoji:'🤒'},{id:'relajado',label:'Relajado/a',emoji:'🧘'},
+    {id:'dolor_cabeza',label:'Dolor de cabeza',emoji:'🤕'},{id:'descansado',label:'Descansado/a',emoji:'🌙'},
+  ]
+};
+
+let estado = {
+  nombre:'Alex', edad:16, peso:60, sexo:'f',
+  aguaMeta:2400, suenoMeta:8,
+  aguaActual:0, suenoActual:0, suenoRegistrado:false,
+  seleccionadas: new Set(),
+  historial:[]
+};
+
+function renderChips() {
+  Object.entries(EMOCIONES).forEach(([cat, lista]) => {
+    document.getElementById('chips-' + cat).innerHTML = lista.map(e =>
+      `<button class="chip cat-${cat}" id="chip-${e.id}" onclick="toggleChip('${e.id}','${cat}')"><span class="chip-emoji">${e.emoji}</span>${e.label}</button>`
+    ).join('');
+  });
+}
+
+function toggleChip(id, cat) {
+  const chip = document.getElementById('chip-' + id);
+  if (estado.seleccionadas.has(id)) {
+    estado.seleccionadas.delete(id); chip.classList.remove('selected');
+  } else {
+    estado.seleccionadas.add(id); chip.classList.add('selected');
+  }
+  updateSummary();
+}
+
+function getEmocion(id) {
+  for (const lista of Object.values(EMOCIONES)) {
+    const f = lista.find(e => e.id === id);
+    if (f) return f;
+  }
+  return null;
+}
+
+function updateSummary() {
+  const box = document.getElementById('selected-summary');
+  if (!estado.seleccionadas.size) {
+    box.innerHTML = '<span style="color:var(--text3);font-style:italic;">Aún no has seleccionado ninguna emoción.</span>';
+  } else {
+    const labels = [...estado.seleccionadas].map(id => { const e=getEmocion(id); return e ? e.emoji+' '+e.label : id; }).join('  ·  ');
+    box.innerHTML = '<strong>Hoy te sientes:</strong> ' + labels;
+  }
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('screen-' + tab).classList.add('active');
+  ['perfil','monitor','emocional','historial'].forEach((t,i) => {
+    if (t===tab) document.querySelectorAll('.nav-tab')[i].classList.add('active');
+  });
+}
+
+function calcularMetas() {
+  const nombre = document.getElementById('nombre').value || 'tú';
+  const edad = parseInt(document.getElementById('edad').value) || 16;
+  const peso = parseInt(document.getElementById('peso').value) || 60;
+  const sexo = document.getElementById('sexo').value;
+  Object.assign(estado, {nombre,edad,peso,sexo});
+  const agua = Math.round(peso * 35 / 100) * 100;
+  const sueno = edad<=13?9:edad<=17?8:7;
+  estado.aguaMeta=agua; estado.suenoMeta=sueno;
+  document.getElementById('agua-meta').textContent=agua;
+  document.getElementById('sueno-meta').textContent=sueno;
+  document.getElementById('metas-text').innerHTML=`¡Listo, <strong>${nombre}</strong>! Basado en tu perfil: debes tomar <strong>${agua} ml</strong> de agua al día y dormir <strong>${sueno} horas</strong> cada noche.`;
+  document.getElementById('metas-box').style.display='flex';
+  actualizarBarras();
+}
+
+function agregarAgua(ml) {
+  estado.aguaActual = Math.min(estado.aguaActual+ml, Math.round(estado.aguaMeta*1.5));
+  document.getElementById('agua-actual').textContent=estado.aguaActual;
+  actualizarBarras(); mostrarTipMonitor();
+}
+
+function actualizarSueno(val) {
+  document.getElementById('sueno-display').textContent=parseFloat(val).toFixed(1)+' h';
+}
+
+function registrarSueno() {
+  const val=parseFloat(document.getElementById('sueno-slider').value);
+  estado.suenoActual=val; estado.suenoRegistrado=true;
+  document.getElementById('sueno-actual').textContent=val.toFixed(1);
+  actualizarBarras(); mostrarTipMonitor();
+}
+
+function actualizarBarras() {
+  const ap=Math.min(100,Math.round(estado.aguaActual/estado.aguaMeta*100));
+  const sp=Math.min(100,Math.round(estado.suenoActual/estado.suenoMeta*100));
+  document.getElementById('agua-bar').style.width=ap+'%';
+  document.getElementById('agua-bar-lbl').textContent=ap+'%';
+  document.getElementById('agua-pct').textContent=ap+'% de tu meta';
+  document.getElementById('sueno-bar').style.width=sp+'%';
+  document.getElementById('sueno-bar-lbl').textContent=sp+'%';
+  document.getElementById('sueno-pct').textContent=estado.suenoRegistrado?sp+'% de tu meta':'Sin registro';
+}
+
+function mostrarTipMonitor() {
+  const ap=Math.round(estado.aguaActual/estado.aguaMeta*100);
+  let msg=ap<30?'¡Bebe más agua! Solo llevas el '+ap+'% de tu meta diaria. ':ap<70?'Vas bien con el agua, ¡sigue así! ':ap<100?'¡Casi llegas a tu meta de agua! ':'¡Meta de agua alcanzada! ';
+  if (estado.suenoRegistrado) {
+    const sp=Math.round(estado.suenoActual/estado.suenoMeta*100);
+    msg+=sp<70?'Tu sueño estuvo bajo lo recomendado. Intenta acostarte antes esta noche.':sp<90?'Tu sueño fue casi suficiente.':'¡Dormiste excelente anoche!';
+  }
+  document.getElementById('monitor-tip-text').textContent=msg;
+  document.getElementById('monitor-tip').style.display='flex';
+}
+
+function guardarRegistroManual() {
+  if (!estado.seleccionadas.size) {
+    const msg = document.getElementById('guardado-msg');
+    document.getElementById('guardado-text').textContent = 'Selecciona al menos una emoción antes de guardar.';
+    msg.style.background = '#FAECE7'; msg.style.borderColor = '#F0997B'; msg.style.color = '#712B13';
+    msg.style.display = 'flex'; return;
+  }
+  const emosStr = [...estado.seleccionadas].map(id => { const e=getEmocion(id); return e ? e.emoji+' '+e.label : id; }).join(', ');
+  guardarRegistro(emosStr);
+  const msg = document.getElementById('guardado-msg');
+  document.getElementById('guardado-text').textContent = '¡Registro guardado! Puedes verlo en la pestaña Historial.';
+  msg.style.background = 'var(--green-light)'; msg.style.borderColor = 'var(--green-mid)'; msg.style.color = 'var(--teal-dark)';
+  msg.style.display = 'flex';
+  setTimeout(() => { msg.style.display = 'none'; }, 3000);
+}
+
+function exportarCSV() {
+  if (!estado.historial.length) {
+    alert('Aún no tienes registros para exportar. ¡Guarda al menos uno primero!');
+    return;
+  }
+  const nombre = estado.nombre || 'usuario';
+  const filas = [
+    ['Nombre','Fecha','Emociones','Agua (ml)','Sueño (horas)'],
+    ...estado.historial.map(r => [nombre, r.fecha, '"'+r.emociones.replace(/"/g,'""')+'"', r.agua, r.sueno.toFixed(1)])
+  ];
+  const csv = filas.map(f => f.join(',')).join('\n');
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'vivebien_'+nombre+'_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click(); URL.revokeObjectURL(url);
+}
+
+function guardarRegistro(emosStr) {
+  const hoy=new Date().toLocaleDateString('es-CL',{day:'2-digit',month:'short'});
+  const firstId=[...estado.seleccionadas][0];
+  const firstE=getEmocion(firstId);
+  estado.historial.unshift({fecha:hoy,emoji:firstE?firstE.emoji:'💬',emociones:emosStr,agua:estado.aguaActual,sueno:estado.suenoActual});
+  renderHistorial();
+}
+
+function renderHistorial() {
+  const list=document.getElementById('historial-list');
+  if (!estado.historial.length){
+    list.innerHTML='<div class="empty-state"><i class="ti ti-calendar-off"></i>Aún no hay registros.<br>¡Empieza a registrar tu bienestar hoy!</div>';return;
+  }
+  list.innerHTML=estado.historial.map(r=>`
+    <div class="history-item">
+      <div class="history-date">${r.fecha}</div>
+      <div class="history-emoji">${r.emoji}</div>
+      <div class="history-detail">
+        <div class="h-emociones">${r.emociones}</div>
+        <div class="h-stats">
+          <span><i class="ti ti-droplet" style="font-size:13px;color:var(--blue);"></i> ${r.agua} ml</span>
+          <span><i class="ti ti-moon" style="font-size:13px;color:var(--purple);"></i> ${r.sueno.toFixed(1)} h</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+renderChips();
+calcularMetas();
+</script>
+</body>
+</html>
