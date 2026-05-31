@@ -720,8 +720,10 @@ function renderHistorial() {
     </div>`).join('');
 }
 
-renderChips();
-calcularMetas();
+document.addEventListener('DOMContentLoaded', () => {
+  renderChips();
+  calcularMetas();
+});
 </script>
 </body>
 </html>
